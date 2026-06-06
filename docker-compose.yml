@@ -1,0 +1,16 @@
+services:
+  web:
+    build: .
+    restart: always
+    networks:
+      - dokploy-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ozoneconvention.rule=Host('ozoneconvention.com') || Host('www.ozoneconvention.com')"
+      - "traefik.http.routers.ozoneconvention.entrypoints=websecure"
+      - "traefik.http.routers.ozoneconvention.tls=true"
+      - "traefik.http.services.ozoneconvention.loadbalancer.server.port=80"
+
+networks:
+  dokploy-network:
+    external: true
